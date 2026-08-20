@@ -1,0 +1,22 @@
+{
+  "name": "spark",
+  "owner": {
+    "name": "Alai Studios",
+    "url": "https://github.com/Alai-Studios"
+  },
+  "metadata": {
+    "description": "Alai Studios' Claude plugin marketplace.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "spark",
+      "source": "./plugins/spark",
+      "description": "Connect Claude to Spark: manage agents, tools, codices/content, users, roles, and conversations through the hosted Spark MCP server (remote, OAuth).",
+      "version": "0.1.0",
+      "author": { "name": "Alai Studios", "url": "https://github.com/Alai-Studios" },
+      "homepage": "https://github.com/Alai-Studios/spark-mcp",
+      "keywords": ["spark", "mcp", "agents", "codices", "oauth"]
+    }
+  ]
+}
