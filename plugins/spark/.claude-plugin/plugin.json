@@ -1,9 +1,0 @@
-{
-  "name": "spark",
-  "description": "Connect Claude to Spark via the hosted Spark MCP server. Exposes agents, tools, codices/content, users, roles, and conversations as MCP tools, authorized by your Spark login over OAuth.",
-  "version": "0.1.0",
-  "author": { "name": "Alai Studios", "url": "https://github.com/Alai-Studios" },
-  "homepage": "https://github.com/Alai-Studios/spark-mcp",
-  "keywords": ["spark", "mcp", "agents", "codices", "oauth"],
-  "mcpServers": "./.mcp.json"
-}

@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "spark": {
-      "type": "http",
-      "url": "https://mcp.spark.my.alaispark.app/mcp"
-    }
-  }
-}

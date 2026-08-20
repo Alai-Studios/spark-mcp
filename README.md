@@ -1,51 +1,50 @@
-# Spark MCP — Claude plugin marketplace
+# Spark MCP
 
-Public distribution repo for connecting **Claude** to **Spark** via the hosted
-Spark MCP server. This repo contains no server code — only the plugin manifest
-that points Claude at the hosted, OAuth-protected endpoint
-`https://mcp.spark.my.alaispark.app/mcp`. (The server itself lives in the private spark
-repo and is deployed to Cloud Run.)
+Connect **Claude** to **Spark** — manage agents, tools, codices/content, users,
+roles, and conversations directly from Claude.
 
 ## Install (Claude Code)
 
-```bash
-# 1. Add this marketplace
-claude plugin marketplace add Alai-Studios/spark-mcp
+Copy-paste the command for your environment:
 
-# 2. Install the Spark plugin (plugin@marketplace)
-claude plugin install spark@spark
+**Production**
+```bash
+claude mcp add --transport http \
+  --client-id app_cK1sJ7Jmnta5BRYWyzn8wQ --callback-port 20148 \
+  spark https://mcp.spark.my.alaispark.app/mcp
 ```
 
-On first use Claude runs the OAuth flow against Spark's login (Authress); sign in
-and approve. Your Spark permission roles bound what the tools can do.
-
-## Install without this marketplace
-
-You don't strictly need a plugin — any Claude surface can add the remote server by
-URL:
-
+**Staging**
 ```bash
-# Claude Code, direct
-claude mcp add --transport http spark https://mcp.spark.my.alaispark.app/mcp
+claude mcp add --transport http \
+  --client-id app_tQxLU61iQd9bKp6WWp3Njg --callback-port 20148 \
+  spark-staging https://mcp.spark.staging.alaispark.app/mcp
 ```
 
-**claude.ai / Claude Desktop:** Settings → Connectors → *Add custom connector* →
-`https://mcp.spark.my.alaispark.app/mcp`.
+Then, in a Claude Code session, run `/mcp`, select the server, choose
+**Authenticate**, and sign in.
+
+```bash
+claude mcp list        # spark → ✓ connected
+```
+
+Ask Claude to call `me_get_profile` to confirm it's working. You act with your own
+Spark permissions — anything you're not allowed to do comes back as an error.
+
+> Stuck, or need to retry? Reset and re-add:
+> ```bash
+> claude mcp logout spark 2>/dev/null; claude mcp remove spark 2>/dev/null
+> ```
 
 ## What you get
 
 Tools grouped by capability: `me_*`, `roles_*`, `users_*`, `tools_*`, `agents_*`,
-`codices_*` / `content_*`, `conversations_*`. Reads are always available; write
-tools depend on the deployment and on your roles.
+`codices_*` / `content_*`, `conversations_*`. What you can read or write is bounded
+by your Spark roles.
 
-## Layout
+## Notes
 
-```
-.claude-plugin/marketplace.json   # marketplace: lists the `spark` plugin
-plugins/spark/
-  .claude-plugin/plugin.json      # plugin manifest
-  .mcp.json                       # remote MCP server (http) → mcp.spark.my.alaispark.app
-```
-
-To point at a non-prod deployment, change the `url` in `plugins/spark/.mcp.json`
-(e.g. `https://mcp.spark.p.alaispark.app/mcp` for dev).
+- Use the **Claude Code CLI** commands above. The claude.ai / Claude Desktop
+  connector UI isn't supported yet.
+- Port `20148` must be free on your machine; don't change it without checking with
+  the Spark team first.
